@@ -5,12 +5,13 @@ require('dotenv').config();
 
 const app = express();
 const authRoutes = require('./routes/authRoutes');
-
+const savedRoutes = require('./routes/savedRoutes');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/api/saved', savedRoutes);
 
 // Test route
 app.get('/', (req, res) => {

@@ -26,12 +26,20 @@ This project is built using the MERN stack (MongoDB, Express.js, React, Node.js)
 
 ---
 
+### Environment Variables
+
+- `YELP_API_KEY`: Required for Yelp API integration (handled by Liliya)
+- `JWT_SECRET`: Required for user authentication (handled by Regina)
+
+---
+
 ## 🔧 Current Project Status
 
 ✅ Backend server is set up  
 ✅ Connected to MongoDB Atlas  
 ✅ Deployed backend to Heroku  
-✅ JWT auth setup in progress  
-🔄 Data model still in development  
+✅ JWT auth setup is done
+✅ Data model is done
+🛠 Routes still in development  
 🛠 Frontend React app setup in separate repo: https://github.com/Liliyalexx/Mindful-Meals
 
