@@ -7,13 +7,16 @@ import axios from 'axios';
 
 const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
+const authRoutes = require('./routes/authRoutes');
+
+
 
 // Middleware
 app.use(cors({
     origin: 'http://localhost:5173',
   }));
-  
 app.use(express.json());
+app.use('/api/auth', authRoutes);
 app.use(express.urlencoded({ extended: true })); 
 
 app.get('/api/search', async (req, res) => {
