@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const yelpRoutes = require('./server/routes/yelp.js');
-import axios from 'axios';
+const axios = require('axios');
 
 const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
@@ -14,7 +14,7 @@ const savedRoutes = require('./routes/savedRoutes.js');
 // Middleware
 app.use(cors({
     origin: 'http://localhost:5173',
-  }));
+}));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/saved', savedRoutes);
