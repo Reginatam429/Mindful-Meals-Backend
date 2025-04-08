@@ -7,8 +7,8 @@ import axios from 'axios';
 
 const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
-const authRoutes = require('./routes/authRoutes');
-const savedRoutes = require('./routes/savedRoutes');
+const authRoutes = require('./routes/authRoutes.js');
+const savedRoutes = require('./routes/savedRoutes.js');
 
 
 // Middleware
