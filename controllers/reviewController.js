@@ -54,11 +54,11 @@ const editReview = async (req, res) => {
 
 // DELETE a review
 const deleteReview = async (req, res) => {
-    const { restaurantId } = req.params;
+    const { reviewId } = req.params;
 
     try {
         const deleted = await Review.findOneAndDelete({
-        restaurant: restaurantId,
+        restaurant: reviewId,
         user: req.user.userId
         });
 

@@ -23,9 +23,8 @@ app.use('/api/reviews', reviewRoutes);
 app.use(express.urlencoded({ extended: true })); 
 
 app.get('/api/search', async (req, res) => {
-    console.log(`Search request received: term=${term}, location=${location}`);
-
     const { term, location } = req.query;
+    console.log(`Search request received: term=${term}, location=${location}`);
 
     try {
         const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
