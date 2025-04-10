@@ -2,27 +2,35 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const yelpRoutes = require('./server/routes/yelp.js');
 const axios = require('axios');
 
-const app = express();
-const YELP_API_KEY = process.env.YELP_API_KEY;
-const yelpRoutes = require('./routes/yelp');
 const authRoutes = require('./routes/authRoutes.js');
 const savedRoutes = require('./routes/savedRoutes.js');
 const reviewRoutes = require('./routes/reviewRoutes');
+const yelpRoutes = require('./routes/yelp.js');
 
+const app = express();
+const YELP_API_KEY = process.env.YELP_API_KEY;
 
-// Middleware
+// ✅ Middleware
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5173', // ✅ frontend dev URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
 }));
 app.use(express.json());
-app.use('/api/yelp', yelpRoutes);
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/saved', savedRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use(express.urlencoded({ extended: true })); 
+app.use('/api/yelp', yelpRoutes);
+
+// ✅ Test Route
+app.get('/', (req, res) => {
+    res.send('Mindful Meals backend is live!');
+});
 
 app.get('/api/search', async (req, res) => {
     const { term, location } = req.query;
@@ -30,29 +38,24 @@ app.get('/api/search', async (req, res) => {
 
     try {
         const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
-            headers: {
+        headers: {
             Authorization: `Bearer ${YELP_API_KEY}`,
-            },
-            params: {
+        },
+        params: {
             term,
             location,
             limit: 10,
-            },
+        },
         });
-    
+
         res.json(response.data.businesses);
-        } catch (error) {
+    } catch (error) {
         console.error(error.response?.data || error.message);
         res.status(500).json({ error: 'Failed to fetch data from Yelp API' });
     }
 });
 
-// Test route
-app.get('/', (req, res) => {
-    res.send('Mindful Meals backend is live!');
-});
-
-// Connect to MongoDB and start server
+// ✅ MongoDB connection + start server
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     const PORT = process.env.PORT || 3000;
