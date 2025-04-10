@@ -3,7 +3,8 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const YELP_API_KEY = process.env.YELP_API_KEY;
+const YELP_API_KEY = process.env.VITE_YELP_API_KEY;
+
 
 // Yelp API search endpoint
 router.get('/search', async (req, res) => {
