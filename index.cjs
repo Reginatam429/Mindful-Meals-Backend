@@ -7,6 +7,7 @@ const axios = require('axios');
 
 const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
+const yelpRoutes = require('./routes/yelp');
 const authRoutes = require('./routes/authRoutes.js');
 const savedRoutes = require('./routes/savedRoutes.js');
 const reviewRoutes = require('./routes/reviewRoutes');
@@ -17,6 +18,7 @@ app.use(cors({
     origin: 'http://localhost:5173',
 }));
 app.use(express.json());
+app.use('/api/yelp', yelpRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/saved', savedRoutes);
 app.use('/api/reviews', reviewRoutes);
