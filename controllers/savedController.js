@@ -4,7 +4,7 @@ const User = require('../models/User');
 // GET all saved restaurants for current user
 const getSavedRestaurants = async (req, res) => {
     try {
-        const restaurants = await SavedRestaurant.find({ user: req.user._id });
+        const restaurants = await SavedRestaurant.find({ user: req.user.userId });
         res.json(restaurants);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch saved restaurants' });
@@ -17,7 +17,7 @@ const saveRestaurant = async (req, res) => {
         const { yelpId, name, address, imageUrl, rating, categories } = req.body;
 
         // Prevent duplicate saves
-        const alreadySaved = await SavedRestaurant.findOne({ yelpId, user: req.user._id });
+        const alreadySaved = await SavedRestaurant.findOne({ yelpId, user: req.user.userId });
         if (alreadySaved) {
         return res.status(200).json(alreadySaved);
         }
@@ -30,12 +30,12 @@ const saveRestaurant = async (req, res) => {
         imageUrl,
         rating,
         categories,
-        user: req.user._id
+        user: req.user.userId
         });
 
         // Update user's savedRestaurants array
         await User.findByIdAndUpdate(
-        req.user._id,
+        req.user.userId,
         { $addToSet: { savedRestaurants: newFavorite._id } }
         );
 
@@ -52,7 +52,7 @@ const deleteSavedRestaurant = async (req, res) => {
     try {
         const deleted = await SavedRestaurant.findOneAndDelete({
         _id: id,
-        user: req.user._id
+        user: req.user.userId
         });
 
         if (!deleted) {
@@ -61,7 +61,7 @@ const deleteSavedRestaurant = async (req, res) => {
 
         // Optional: remove reference from user doc
         await User.findByIdAndUpdate(
-        req.user._id,
+        req.user.userId,
         { $pull: { savedRestaurants: id } }
         );
 
