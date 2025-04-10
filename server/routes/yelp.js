@@ -29,7 +29,10 @@ router.get('/search', async (req, res) => {
       }
     });
 
-    res.json({ businesses: response.data.businesses }); // ✅ send in expected shape
+    // Filter businesses with coordinates missing
+    const businessesWithCoordinates = response.data.businesses.filter(business => business.coordinates);
+
+    res.json({ businesses: businessesWithCoordinates }); // ✅ send businesses with valid coordinates
   } catch (error) {
     console.error('Yelp API error:', error);
     res.status(500).json({ error: 'Failed to fetch Yelp data' });
