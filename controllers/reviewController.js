@@ -5,7 +5,7 @@ const createReview = async (req, res) => {
     const { restaurantId, comment, rating, customTags } = req.body;
     try {
         const newReview = await Review.create({
-        user: req.user.userId,
+        user: req.user._id, // ✅ consistent user ID
         restaurant: restaurantId,
         comment,
         rating,
@@ -23,7 +23,7 @@ const getReviewByRestaurant = async (req, res) => {
     try {
         const review = await Review.findOne({
         restaurant: restaurantId,
-        user: req.user.userId
+        user: req.user._id // ✅ consistent
         });
 
         if (!review) return res.status(404).json({ error: 'Review not found' });
@@ -40,7 +40,7 @@ const editReview = async (req, res) => {
 
     try {
         const updated = await Review.findOneAndUpdate(
-        { restaurant: restaurantId, user: req.user.userId },
+        { restaurant: restaurantId, user: req.user._id }, // ✅ match user ID
         { comment, rating, customTags },
         { new: true }
         );
@@ -58,8 +58,8 @@ const deleteReview = async (req, res) => {
 
     try {
         const deleted = await Review.findOneAndDelete({
-        restaurant: reviewId,
-        user: req.user.userId
+        _id: reviewId, // ✅ correct field: review ID, not restaurant ID
+        user: req.user._id
         });
 
         if (!deleted) return res.status(404).json({ error: 'Review not found' });
