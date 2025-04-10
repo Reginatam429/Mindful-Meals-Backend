@@ -7,7 +7,7 @@ const axios = require('axios');
 const authRoutes = require('./routes/authRoutes.js');
 const savedRoutes = require('./routes/savedRoutes.js');
 const reviewRoutes = require('./routes/reviewRoutes');
-const yelpRoutes = require('./routes/yelp.js');
+const yelpRoutes = require('./server/routes/yelp.js');
 
 const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
