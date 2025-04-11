@@ -13,8 +13,13 @@ const app = express();
 const YELP_API_KEY = process.env.YELP_API_KEY;
 
 // ✅ Middleware
+// Determine the origin based on the environment
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? 'https://mindful-meals.netlify.app/' //Netlify URL
+  : 'http://localhost:5173'; // Local development URL
+
 app.use(cors({
-    origin: 'http://localhost:5173', // ✅ frontend dev URL
+    origin: allowedOrigins, // dynamically set the origin based on environment
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
