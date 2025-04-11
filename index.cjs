@@ -14,20 +14,17 @@ const YELP_API_KEY = process.env.YELP_API_KEY;
 
 // ✅ Middleware
 // Determine the origin based on the environment
-const allowedOrigins = process.env.NODE_ENV === 'production'
-    ? 'https://mindful-meals.netlify.app'
-    : ['http://localhost:5173', 'http://localhost:3000']; // multiple localhost URLs if needed
-
 app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) { 
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    allowedHeaders: ['Content-Type', 'Authorization'], // Add custom headers if necessary
+    credentials: true // This allows cookies to be sent across origins (required if using JWT cookies)
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
