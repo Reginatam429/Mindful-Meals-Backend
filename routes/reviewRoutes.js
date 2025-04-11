@@ -9,9 +9,9 @@ const {
 } = require('../controllers/reviewController');
 
 // Protect all routes
-router.post('/', verifyToken, createReview);
-router.get('/restaurant/:restaurantId', verifyToken, getReviewByRestaurant);
-router.put('/restaurant/:restaurantId', verifyToken, editReview);
+router.get('/', verifyToken, getReviewByRestaurant);
+router.post('/restaurant/:restaurantId', verifyToken, createReview);
+router.put('/:reviewId', verifyToken, editReview);
 router.delete('/:reviewId', verifyToken, deleteReview);
 
 module.exports = router;

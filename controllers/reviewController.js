@@ -7,9 +7,9 @@ const createReview = async (req, res) => {
         const newReview = await Review.create({
             user: req.user.userId,
             restaurant: restaurantId,
-            comment,
-            rating,
-            customTags
+            comment: comment,
+            rating: rating,
+            customTags: customTags
         });
         res.status(201).json(newReview);
     } catch (err) {
