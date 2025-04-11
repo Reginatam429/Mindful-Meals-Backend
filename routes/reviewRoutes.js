@@ -10,7 +10,7 @@ const {
 
 // Protect all routes
 router.get('/', verifyToken, getReviewByRestaurant);
-router.post('/restaurant/:restaurantId', verifyToken, createReview);
+router.post('/', verifyToken, createReview);
 router.put('/:reviewId', verifyToken, editReview);
 router.delete('/:reviewId', verifyToken, deleteReview);
 
